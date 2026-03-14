@@ -22,8 +22,8 @@ export default function Header() {
             <NavLink
               className={({ isActive }) =>
                 isActive
-                  ? "text-orange-500 uppercase font-bold"
-                  : "text-white uppercase font-bold"
+                  ? "bg-orange-500/80 text-white rounded-lg p-2 uppercase font-bold transition-colors"
+                  : "hover:bg-orange-500/80 text-white uppercase rounded-lg font-bold p-2 transition-colors"
               }
               to="/"
             >
@@ -32,8 +32,8 @@ export default function Header() {
             <NavLink
               className={({ isActive }) =>
                 isActive
-                  ? "text-orange-500 uppercase font-bold"
-                  : "text-white uppercase font-bold"
+                  ? "bg-orange-500/80 text-white rounded-lg p-2 uppercase font-bold transition-colors"
+                  : "hover:bg-orange-500/80 text-white uppercase rounded-lg font-bold p-2 transition-colors"
               }
               to="/favoritos"
             >
