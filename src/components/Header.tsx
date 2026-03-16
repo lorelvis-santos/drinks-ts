@@ -1,9 +1,17 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAppStore } from "../stores/useAppStore";
 
 export default function Header() {
   const { pathname } = useLocation();
   const isHome = useMemo(() => pathname === "/", [pathname]);
+
+  const fetchCategories = useAppStore((state) => state.fetchCategories);
+  const categories = useAppStore((state) => state.categories);
+
+  useEffect(() => {
+    fetchCategories();
+  });
 
   return (
     <header
@@ -70,7 +78,17 @@ export default function Header() {
                 name="ingredient"
                 id="ingredient"
                 className="p-3 bg-white w-full rounded-lg focus:outline-none"
-              />
+                defaultValue=""
+              >
+                <option value="" disabled>
+                  -- Seleccione una opción --
+                </option>
+                {categories.map((c) => (
+                  <option key={c.name} value={c.name}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <input
               type="submit"
