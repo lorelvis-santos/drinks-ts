@@ -1,10 +1,24 @@
-import { useEffect, useMemo } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type SubmitEvent,
+} from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppStore } from "../stores/useAppStore";
+import Error from "./Error";
 
 export default function Header() {
   const { pathname } = useLocation();
   const isHome = useMemo(() => pathname === "/", [pathname]);
+
+  const [searchFilters, setSearchFilters] = useState({
+    ingredient: "",
+    category: "",
+  });
+
+  const [error, setError] = useState("");
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
   const categories = useAppStore((state) => state.categories);
@@ -12,6 +26,28 @@ export default function Header() {
   useEffect(() => {
     fetchCategories();
   });
+
+  const handleChange = (
+    e:
+      | ChangeEvent<HTMLInputElement, HTMLInputElement>
+      | ChangeEvent<HTMLSelectElement, HTMLSelectElement>,
+  ) => {
+    setSearchFilters({
+      ...searchFilters,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (Object.values(searchFilters).includes("")) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    setError("");
+  };
 
   return (
     <header
@@ -51,7 +87,12 @@ export default function Header() {
         </div>
 
         {isHome && (
-          <form className="md:w-1/2 2xl:w-1/3 bg-orange-400/85 my-32 p-10 rounded-lg shadow flex flex-col gap-6">
+          <form
+            className="md:w-1/2 2xl:w-1/3 bg-orange-400/85 my-32 p-10 rounded-lg shadow flex flex-col gap-6"
+            onSubmit={handleSubmit}
+          >
+            {error && <Error>{error}</Error>}
+
             <div className="flex flex-col gap-2">
               <label
                 htmlFor="ingredient"
@@ -65,20 +106,24 @@ export default function Header() {
                 id="ingredient"
                 className="p-3 bg-white w-full rounded-lg focus:outline-none"
                 placeholder="Ej. Vodka, Tequila, Café..."
+                onChange={handleChange}
+                value={searchFilters.ingredient}
               />
             </div>
             <div className="flex flex-col gap-2">
               <label
-                htmlFor="ingredient"
+                htmlFor="category"
                 className="text-white font-bold text-lg"
               >
                 Categoría
               </label>
               <select
-                name="ingredient"
-                id="ingredient"
+                name="category"
+                id="category"
                 className="p-3 bg-white w-full rounded-lg focus:outline-none"
                 defaultValue=""
+                onChange={handleChange}
+                value={searchFilters.category}
               >
                 <option value="" disabled>
                   -- Seleccione una opción --
