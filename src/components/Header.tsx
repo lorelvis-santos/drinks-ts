@@ -8,12 +8,13 @@ import {
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppStore } from "../stores/useAppStore";
 import Error from "./Error";
+import type { SearchFilter } from "../types";
 
 export default function Header() {
   const { pathname } = useLocation();
   const isHome = useMemo(() => pathname === "/", [pathname]);
 
-  const [searchFilters, setSearchFilters] = useState({
+  const [searchFilters, setSearchFilters] = useState<SearchFilter>({
     ingredient: "",
     category: "",
   });
@@ -22,6 +23,7 @@ export default function Header() {
 
   const fetchCategories = useAppStore((state) => state.fetchCategories);
   const categories = useAppStore((state) => state.categories);
+  const searchRecipes = useAppStore((state) => state.searchRecipes);
 
   useEffect(() => {
     fetchCategories();
@@ -47,6 +49,7 @@ export default function Header() {
     }
 
     setError("");
+    searchRecipes(searchFilters);
   };
 
   return (
