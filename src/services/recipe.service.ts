@@ -4,7 +4,7 @@ import {
   DrinksResponseSchema,
   RecipesResponseSchema,
 } from "../schemas/recipes-schema";
-import type { Category, Drink, SearchFilter } from "../types";
+import type { Category, Drink, Recipe, SearchFilter } from "../types";
 
 export async function getCategories(): Promise<Category[]> {
   const url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list";
@@ -33,9 +33,14 @@ export async function getRecipes(filter: SearchFilter): Promise<Drink[]> {
   return [];
 }
 
-export async function getRecipeById(id: Drink["id"]) {
+export async function getRecipeById(id: Drink["id"]): Promise<Recipe | null> {
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
   const { data } = await axios(url);
   const result = RecipesResponseSchema.safeParse(data);
-  console.log(result);
+
+  if (result.success) {
+    return result.data[0];
+  }
+
+  return null;
 }
