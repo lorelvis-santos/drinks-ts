@@ -15,6 +15,9 @@ export default function Modal() {
   const handleClickFavorite = useAppStore((state) => state.handleClickFavorite);
   const favoriteExists = useAppStore((state) => state.favoriteExists);
 
+  // Para forzar el re-renderizado una vez cambie la lista de favoritos.
+  useAppStore((state) => state.favorites);
+
   return (
     <>
       <Transition appear show={modal} as={Fragment}>

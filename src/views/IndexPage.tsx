@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useAppStore } from "../stores/useAppStore";
-import DrinkCard from "../components/DrinkCard";
+import DrinksContainer from "../components/DrinksContainer";
 
 export default function IndexPage() {
   const drinks = useAppStore((state) => state.drinks);
@@ -10,11 +10,7 @@ export default function IndexPage() {
     <>
       <h1 className="text-4xl font-extrabold">Recetas</h1>
       {hasDrinks ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 my-10 gap-10">
-          {drinks.map((drink) => (
-            <DrinkCard key={drink.id} drink={drink} />
-          ))}
-        </div>
+        <DrinksContainer drinks={drinks} />
       ) : (
         <>
           <p className="my-10 text-2xl">
