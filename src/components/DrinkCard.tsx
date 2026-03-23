@@ -17,7 +17,7 @@ export default function DrinkCard({ drink }: DrinkCardProps) {
   return (
     <div className="border border-slate-200 shadow-lg rounded-md relative group">
       <div
-        className="absolute top-1 right-1 rounded-full bg-red-400 p-2 cursor-pointer hover:bg-red-500 transition-all opacity-0 group-hover:opacity-100 z-30"
+        className="absolute top-1 right-1 rounded-full bg-red-400 p-2 cursor-pointer hover:bg-red-500 transition-all xl:opacity-0 xl:group-hover:opacity-100 z-30"
         onClick={() => toggleFavorite(drink.id)}
       >
         {favoriteExists(drink.id) ? (
