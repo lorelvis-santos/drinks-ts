@@ -70,7 +70,13 @@ export default function Header() {
       <div className="mx-auto container w-[90%] py-8">
         <div className="flex justify-between items-center">
           <div>
-            <img src="/logo.svg" alt="Logo de la aplicación" className="w-24" />
+            <NavLink to="/">
+              <img
+                src="/logo.svg"
+                alt="Logo de la aplicación"
+                className="w-24"
+              />
+            </NavLink>
           </div>
           <nav className="flex gap-4">
             <NavLink

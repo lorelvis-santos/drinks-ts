@@ -21,7 +21,7 @@ export default function Modal() {
   return (
     <>
       <Transition appear show={modal} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <TransitionChild
             as={Fragment}
             enter="ease-out duration-300"
@@ -56,7 +56,7 @@ export default function Modal() {
                   <img
                     src={recipe?.thumbUrl}
                     alt={`${recipe?.name} image`}
-                    className="mx-auto w-96"
+                    className="w-full object-cover"
                   />
 
                   <DialogTitle
@@ -95,7 +95,12 @@ export default function Modal() {
                     <button
                       type="button"
                       className="w-full cursor-pointer rounded-lg bg-orange-600 p-3 font-bold uppercase text-white shadow hover:bg-orange-500 transition-colors"
-                      onClick={() => recipe && handleClickFavorite(recipe)}
+                      onClick={() => {
+                        if (recipe) {
+                          handleClickFavorite(recipe);
+                        }
+                        closeModal();
+                      }}
                     >
                       {recipe && favoriteExists(recipe.id)
                         ? "Remover de favoritos"
