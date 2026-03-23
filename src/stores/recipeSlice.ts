@@ -15,6 +15,7 @@ export type RecipesSliceType = {
   getRecipe: (id: Recipe["id"]) => Promise<Recipe | null>;
   searchRecipes: (filters: SearchFilter) => Promise<void>;
   selectRecipe: (id: Drink["id"]) => Promise<void>;
+  clearSelectedRecipe: () => void;
   closeModal: () => void;
 };
 
@@ -45,15 +46,14 @@ export const createRecipeSlice: StateCreator<RecipesSliceType> = (set) => ({
       modal: true,
     }));
   },
-  showModal: () => {
-    set({
-      modal: true,
-    });
-  },
   closeModal: () => {
     set(() => ({
       modal: false,
-      selectedRecipe: null,
     }));
+  },
+  clearSelectedRecipe: () => {
+    set({
+      selectedRecipe: null,
+    });
   },
 });

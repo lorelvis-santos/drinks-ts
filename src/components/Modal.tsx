@@ -12,6 +12,7 @@ export default function Modal() {
   const recipe = useAppStore((state) => state.selectedRecipe);
   const modal = useAppStore((state) => state.modal);
   const closeModal = useAppStore((state) => state.closeModal);
+  const clearSelectedRecipe = useAppStore((state) => state.clearSelectedRecipe);
   const handleClickFavorite = useAppStore((state) => state.handleClickFavorite);
   const favoriteExists = useAppStore((state) => state.favoriteExists);
 
@@ -20,7 +21,12 @@ export default function Modal() {
 
   return (
     <>
-      <Transition appear show={modal} as={Fragment}>
+      <Transition
+        appear
+        show={modal}
+        as={Fragment}
+        afterLeave={clearSelectedRecipe}
+      >
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <TransitionChild
             as={Fragment}
