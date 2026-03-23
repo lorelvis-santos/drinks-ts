@@ -25,6 +25,8 @@ export default function Header() {
   const categories = useAppStore((state) => state.categories);
   const searchRecipes = useAppStore((state) => state.searchRecipes);
 
+  const showNotification = useAppStore((state) => state.showNotification);
+
   useEffect(() => {
     fetchCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +48,10 @@ export default function Header() {
 
     if (Object.values(searchFilters).includes("")) {
       setError("Todos los campos son obligatorios");
+      showNotification({
+        text: "Todos los campos son obligatorios",
+        error: true,
+      });
       return;
     }
 
